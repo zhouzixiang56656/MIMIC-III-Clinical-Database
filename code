@@ -1,0 +1,49 @@
+from sklearn.metrics import confusion_matrix
+from sklearn.metrics import recall_score
+import matplotlib.pyplot as plt
+# 设置字体格式
+plt.rcParams['font.family'] = 'SimHei'
+#控制字符可以正常显示
+plt.rcParams['axes.unicode_minus'] = False
+
+fact = [1,1,1,1,2,2,2,2,2,2,2,1,1,1,2,2,2,2,2,2,2,2,2,1,1,2,2,2,0,1,1,1,1,2,2,2,2,2,1,1,2,2,1,1,1,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,2,2,2,2,2,1,1,1,1,1,1,2,2,2,2,2,1,1,1,1,1,1,1,2,2,2,2,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,2,2,2,2,1,1,1,1,1,2,2,2,2,2,2,2,2,1,1,1,1,2,2,2,2,2,2,2,1,1,1,1,1,1,1,2,2,2,1,1,1,1,2,2,2,2,1,1,1,1,1,1,2,1,1,1,1,1,1,2,2,1,1,1,1,1,2,1,1,1,1,1,1,1,1,2,2,2,2,1,1,1,1,2,2,2,2,2,2,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,1,1,1,2,2,2,2,2,2,2,1,1,1,1,2,2,2,2,1,1,1,2,2,2,2,0,1,1,1,1,1,1,1,1,1,2,2,2,2,1,1,1,1,2,2,2,1,1,1,1,1,1,1,1,2,0,1,1,1,1,1,1,1,1,1,1,1,1,2,0,1,1,1,1,1,2,2,2,2,2,0,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,2,1,1,1,1,2,2,0,1,1,1,1,1,2,2,0,1,1,1,1,1,1,1,2,1,1,1,1,2,2,1,1,1,1,2,2
+]
+guess = [1,1,1,1,2,2,2,2,2,2,2,1,1,1,2,2,2,2,2,2,2,2,2,1,1,2,2,2,1,1,1,1,2,2,2,2,2,2,1,2,2,2,1,1,2,2,2,2,2,2,2,1,1,1,1,1,1,1,1,2,2,2,2,2,2,1,1,1,1,1,1,2,2,2,2,2,1,1,1,1,1,1,1,2,2,2,2,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,2,2,2,2,1,1,2,2,1,2,2,2,2,2,2,2,2,1,1,1,2,2,2,2,2,2,2,2,1,1,1,1,1,1,2,2,2,2,1,1,1,2,2,2,2,2,1,1,1,1,1,2,2,1,1,1,1,1,2,2,2,1,1,1,1,1,2,1,1,1,1,1,1,2,2,2,2,2,2,1,1,1,1,2,2,2,2,2,2,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,1,2,2,2,2,2,2,2,2,2,1,1,1,2,2,2,2,2,1,1,2,2,2,2,2,1,1,1,1,1,1,2,1,1,1,2,2,2,2,1,1,1,1,2,2,2,1,1,1,1,1,1,1,2,2,1,1,1,1,1,1,2,2,1,1,1,1,1,2,1,1,1,1,1,1,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,2,2,1,1,1,1,2,2,1,1,1,1,2,2,2,2,1,1,1,1,1,1,1,2,2,1,1,1,2,2,2,1,1,1,1,2,2
+]
+plt.figure(figsize=(9,5),dpi=100)
+plt.subplot(1,2,1)
+classes = list(set(fact))
+classes.sort()
+confusion = confusion_matrix(guess, fact)
+plt.imshow(confusion, cmap=plt.cm.Blues)
+indices = range(len(confusion))
+plt.xticks(indices, classes,fontproperties='Times New Roman', size=12,weight='bold')
+plt.yticks(indices, classes,fontproperties='Times New Roman', size=12,weight='bold')
+plt.colorbar()
+plt.xlabel('Predict\ntrain',size=13)
+plt.ylabel('Actual',size=13)
+for first_index in range(len(confusion)):
+    for second_index in range(len(confusion[first_index])):
+        plt.text(first_index, second_index, confusion[first_index][second_index])
+plt.tight_layout()
+
+plt.subplot(1,2,2)
+fact = [1,1,1,2,2,1,2,2,2,2,2,2,2,2,1,1,2,2,1,1,1,1,2,0,2,2,2,2,2,1,2,1,2,2,1,2,2,2,1,2,2,2,2,1,1,2,2,1,1,1,1,2,2,1,1,2,2,2,1,1,2,2,2,2,2,1,1,2,2,1,2,2,2,2,1,1,1,1,1,2,1,2,2,1,1,0,2,2,2,2,2,2,2,0,1,2,2,2,0,2,1,2,2,1,1,1,1,2,2,2,2,1,1,1,2,2,0,0,1,1,2,1,1,2,2,1,1,2,2,2,1,1,1,1,1,1,1,2,1,1,1,2,1,1,1,1,1,2,2,2
+]
+guess = [1,1,1,1,2,1,2,2,2,2,2,2,2,2,1,1,2,2,1,1,1,1,2,1,2,2,2,2,2,1,2,1,1,2,1,2,2,2,1,2,2,2,2,1,1,2,2,1,1,1,1,1,2,1,1,1,2,2,1,1,2,2,2,2,2,1,1,1,2,1,1,2,2,2,1,1,1,1,1,2,1,2,2,1,1,1,2,2,2,2,2,2,2,1,1,1,2,2,1,2,1,2,2,1,1,1,1,2,2,2,2,1,1,1,2,2,1,1,1,1,2,1,1,2,2,1,1,2,2,2,1,1,1,1,1,1,1,2,1,1,1,2,1,1,1,1,1,2,2,2
+]
+classes = list(set(fact))
+classes.sort()
+confusion = confusion_matrix(guess, fact)
+plt.imshow(confusion, cmap=plt.cm.Oranges)
+indices = range(len(confusion))
+plt.xticks(indices, classes,fontproperties='Times New Roman', size=12,weight='bold')
+plt.yticks(indices, classes,fontproperties='Times New Roman', size=12,weight='bold')
+plt.colorbar()
+plt.xlabel('Predict\ntest',size=13)
+plt.ylabel('Actual',size=13)
+for first_index in range(len(confusion)):
+    for second_index in range(len(confusion[first_index])):
+        plt.text(first_index, second_index, confusion[first_index][second_index])
+plt.tight_layout()
+plt.savefig("混淆矩阵.pdf", dpi=300)
